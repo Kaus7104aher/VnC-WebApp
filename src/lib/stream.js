@@ -1,3 +1,5 @@
+//here we can observe user to our database i.e stream dashboard
+
 import {StreamChat} from "stream-chat"
 import "dotenv/config.js"
 

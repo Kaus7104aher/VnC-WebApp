@@ -2,7 +2,7 @@ import { upsertStreamUser } from "../lib/stream.js";
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 
-export const signup = async(req,res)=>{
+export async function signup(req,res){
    const {email,password,fullName} = req.body;
 
    try {
@@ -69,7 +69,7 @@ export const signup = async(req,res)=>{
    }
 };
 
-export const login = async(req,res)=>
+export async function login(req,res)
 {
    try {
       const {email,password} = req.body;
@@ -103,11 +103,58 @@ export const login = async(req,res)=>
    }   
 };
 
-export const logout = (req,res)=>
+export async function logout(req,res)
 {
    res.clearCookie("jwt");
    res.status(201).json({success:true,message:"Logout Succesfully"});
 };
+
+export async function onboard(req,res){
+ try {
+  const userId = req.user._id;
+
+  const { fullName,bio, nativeLanguage , learningLanguage, location} = req.body;
+
+  if(!fullName || !bio || !nativeLanguage || !learningLanguage || !location){
+    return res.status(400).json({message: "All fields are requiered",
+      missingFields:[
+        !fullName && "fullName",
+        !bio && "bio",
+        !nativeLanguage && "nativeLanguage",
+        !learningLanguage && "learningLanguage",
+        !location && "location",
+      ].filter(Boolean),
+    });
+  }
+  
+  const updateUser = await User.findByIdAndUpdate(userId,{
+    ...req.body,
+    isOnboarded: true,
+  },{new:true})
+
+  if(!updateUser) {
+    return res.status(404).json({message: "User Not Found"});
+  }
+
+  try {
+
+    await upsertStreamUser({
+    
+    id: updateUser._id.toString(),
+    name: updateUser.fullName,
+    image: updateUser.profilePic || "",
+  })
+    console.log(`Stream yser updated onboarding for ${updateUser.fullName}`);
+  } catch (streamError) {
+    console.log("Stream yser updated onboarding for :" ,streamError.message);
+  }
+
+  return res.status(200).json({success: true, user:updateUser});
+ } catch (error) {
+    console.error("Onboarding Error",error);
+    res.status(500)({message : "Internal server Error"});
+ }
+}
 
 //0YvMp6QYw8SoVtC0
 //mongodb+srv://kaustubhaher07:0YvMp6QYw8SoVtC0@cluster0.1xmdqca.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0

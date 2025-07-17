@@ -157,9 +157,3 @@ export async function onboard(req,res){
     res.status(500)({message : "Internal server Error"});
  }
 }
-
-//0YvMp6QYw8SoVtC0
-//mongodb+srv://kaustubhaher07:0YvMp6QYw8SoVtC0@cluster0.1xmdqca.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
-
-//without pass
-//mongodb+srv://kaustubhaher07:<db_password>@cluster0.1xmdqca.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0

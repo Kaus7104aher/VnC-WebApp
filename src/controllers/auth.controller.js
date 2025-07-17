@@ -2,7 +2,8 @@ import { upsertStreamUser } from "../lib/stream.js";
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 
-export async function signup(req,res){
+export const signup = async(req,res)=>{
+
    const {email,password,fullName} = req.body;
 
    try {
@@ -69,7 +70,7 @@ export async function signup(req,res){
    }
 };
 
-export async function login(req,res)
+export const login = async(req,res)=>
 {
    try {
       const {email,password} = req.body;
@@ -103,7 +104,8 @@ export async function login(req,res)
    }   
 };
 
-export async function logout(req,res)
+
+export const logout = (req,res)=>
 {
    res.clearCookie("jwt");
    res.status(201).json({success:true,message:"Logout Succesfully"});

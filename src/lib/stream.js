@@ -1,5 +1,6 @@
 //here we can observe user to our database i.e stream dashboard
 
+
 import {StreamChat} from "stream-chat"
 import "dotenv/config.js"
 
@@ -23,4 +24,12 @@ export const upsertStreamUser = async(userData) =>{
 };
 
 // tot: do it later
-export const generateStreamToken = (userId) =>{};
+export const generateStreamToken = (userId) => {
+  try {
+    // ensure userId is a string
+    const userIdStr = userId.toString();
+    return streamClient.createToken(userIdStr);
+  } catch (error) {
+    console.error("Error generating Stream token:", error);
+  }
+};

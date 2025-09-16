@@ -1,0 +1,21 @@
+{
+  "name": "chatapp",
+  "version": "1.0.0",
+  "description": "MERN-based real-time chat web application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kaus7104aher/ChatApp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Kaus7104aher/ChatApp/issues"
+  },
+  "homepage": "https://github.com/Kaus7104aher/ChatApp#readme"
+}
